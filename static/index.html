@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Environmental Monitoring System</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div>
+      <p class="eyebrow">ENGINEERING PROJECT · DEMO MODE</p>
+      <h1>Smart Environmental Monitoring</h1>
+      <p class="subtitle">Track temperature and humidity, and detect readings outside your limits.</p>
+    </div>
+    <span id="connection" class="status">Connecting…</span>
+  </header>
+
+  <main>
+    <section class="notice">
+      <strong>Important:</strong> This version uses simulated readings. It does not yet read a physical sensor.
+      You can later connect an ESP32/Arduino sensor and send real readings to the API.
+    </section>
+
+    <section class="metrics">
+      <article class="metric-card">
+        <p class="metric-label">Temperature</p>
+        <div><span id="temperature" class="metric-value">--</span><span class="unit">°C</span></div>
+        <p class="metric-help">Latest reported temperature</p>
+      </article>
+      <article class="metric-card">
+        <p class="metric-label">Relative humidity</p>
+        <div><span id="humidity" class="metric-value">--</span><span class="unit">%</span></div>
+        <p class="metric-help">Latest reported humidity</p>
+      </article>
+      <article class="metric-card">
+        <p class="metric-label">Reading source</p>
+        <div id="source" class="source-value">--</div>
+        <p class="metric-help">Simulation or submitted reading</p>
+      </article>
+    </section>
+
+    <section class="panel">
+      <div class="panel-heading">
+        <div><h2>Alert status</h2><p>Alerts are based on the limits below.</p></div>
+        <button id="simulateButton" class="primary">Generate new reading</button>
+      </div>
+      <div id="alerts" class="alerts" role="status">Waiting for the first reading…</div>
+      <p class="timestamp">Last updated: <span id="timestamp">--</span></p>
+    </section>
+
+    <section class="panel">
+      <h2>Configure alert limits</h2>
+      <p>Change the maximum values. If a reading is higher than a limit, an alert will appear.</p>
+      <form id="thresholdForm" class="threshold-form">
+        <label>Maximum temperature (°C)
+          <input id="maxTemperature" type="number" min="-40" max="125" step="0.5" value="35" required>
+        </label>
+        <label>Maximum humidity (%)
+          <input id="maxHumidity" type="number" min="0" max="100" step="1" value="75" required>
+        </label>
+        <button class="secondary" type="submit">Save limits</button>
+      </form>
+      <p id="formMessage" class="form-message" aria-live="polite"></p>
+    </section>
+
+    <section class="panel">
+      <h2>How this system works</h2>
+      <ol class="steps">
+        <li>A sensor would measure temperature and humidity. In this starter project, the API simulates these values.</li>
+        <li>The FastAPI backend receives a reading and compares it with the configured limits.</li>
+        <li>The dashboard calls the API and shows the latest values and alerts.</li>
+        <li>Tests check that the API and alert logic behave as expected.</li>
+      </ol>
+    </section>
+  </main>
+  <footer>Built with Python, FastAPI, HTML, CSS and JavaScript · Educational prototype</footer>
+  <script src="/static/app.js"></script>
+</body>
+</html>
